@@ -16,11 +16,21 @@ function Weather({temperature, weather, city}) {
   )
 }
 
+function SevenDayForecast({ sevenDayTemp, sevenDayWeather }) {
+  return (
+    <>
+      <p>{sevenDayTemp}</p>
+      <p>{sevenDayWeather}</p>
+    </>
+  )
+}
+
 
 function App() {
   const [cityName, setCityName] = useState([]);
   const [localTemp, setlocalTemp] = useState([]);
   const [localWeather, setLocalWeather] = useState([]);
+  const [dayList, setDayList] = useState([]);
 
   
   async function getWeather() {
@@ -31,6 +41,7 @@ function App() {
        setlocalTemp(data.list[0].temp.day) 
     setLocalWeather(data.list[0].weather[0].main)
     setCityName(data.city.name)
+    setDayList(data.list)
 
 
     }
