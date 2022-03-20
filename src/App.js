@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@mui/material';
+import { Button, Card, Box } from '@mui/material';
 import './App.css';
 
 function Weather({temperature, weather, city}) {
   
   return (
     <>
+      
       <h3>{city}</h3>
       <p> {temperature}</p>
       <p> {weather}</p>
@@ -23,7 +24,7 @@ function App() {
 
   
   async function getWeather() {
-    const response = await fetch('https://api.openweathermap.org/data/2.5/forecast/daily?q=London&units=imperial&cnt=7&appid=08e194dbf106b4a880235ddea75704dd');
+    const response = await fetch('https://api.openweathermap.org/data/2.5/forecast/daily?q=London&units=imperial&cnt=7&appid=');
     const data = await response.json()
 
     console.log(data)
@@ -38,15 +39,17 @@ function App() {
   
   console.log(localTemp)
   return (
-    <div className="App">
+    <>
       
-      
-      <Weather temperature={localTemp} weather={localWeather} city={cityName}/>
+      <Card sx={{ maxWidth: 275 }}>
+        <Weather temperature={localTemp} weather={localWeather} city={cityName} />
+        </Card>
+        
       <Button variant="contained" onClick={getWeather}>
   Get Weather
 </Button>
      
-    </div>
+</>
   );
 }
 
