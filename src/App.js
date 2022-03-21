@@ -66,7 +66,8 @@ function App() {
     <div className="container">
       <div className="inputArea">
       <form>
-      <input
+          <input
+            placeholder="City Name"
         type="text"
           value={chosenCity}
           onChange={(e) => setChosenCity(e.target.value)}
