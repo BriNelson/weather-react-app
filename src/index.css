@@ -11,3 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+input{
+  height: 35px;
+}
+
+.sevenDat{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  
+}
+
+
+.daySpacing{
+  margin-right: 20px;
+}
+.inputArea{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+}
+.mainCard{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  
+}

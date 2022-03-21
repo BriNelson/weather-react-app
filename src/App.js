@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Button, Card, Box, CardMedia, TextField } from '@mui/material';
+import { useState } from 'react';
+import {Card, CardMedia, Button} from '@mui/material';
 import './App.css';
 
 function Weather({temperature, weather, city}) {
@@ -47,7 +47,7 @@ function App() {
   async function getWeather() {
 
 
-    const response = await fetch('https://api.openweathermap.org/data/2.5/forecast/daily?q=London&units=imperial&cnt=7&appid=08e194dbf106b4a880235ddea75704dd');
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?q=${chosenCity}&units=imperial&cnt=7&appid=08e194dbf106b4a880235ddea75704dd`);
     const data = await response.json()
 
     console.log(data.list)
@@ -63,25 +63,30 @@ function App() {
   
  
   return (
-    <>
+    <div className="container">
+      <div className="inputArea">
       <form>
       <input
         type="text"
           value={chosenCity}
           onChange={(e) => setChosenCity(e.target.value)}
       ></input>
-      <button onClick={getWeather}>
-  Get Weather
-        </button>
+      
       </form>
-      {chosenCity}
-      <Card sx={{ maxWidth: 275 }}>
+      <Button variant="contained" onClick={getWeather}>
+  Get Weather
+        </Button>
+        </div>
+      <div className="mainCard">
+      <Card sx={{ width: 275 }}>
         <Weather temperature={localTemp} weather={localWeather} city={cityName} />
         </Card>
-        
-      {dayList.map(dayTest => (<SevenDayForecast sevenDayTemp={dayTest.temp.day} sevenDayWeather={dayTest.weather[0].main} sevenDayIcon={dayTest.weather[0].icon }/>))}
-     
-</>
+        </div>
+      <div className="sevenDat">
+    
+      {dayList.map(dayTest => (<SevenDayForecast className="daySpacing" sevenDayTemp={dayTest.temp.day} sevenDayWeather={dayTest.weather[0].main} sevenDayIcon={dayTest.weather[0].icon }/>))}
+      </div>
+      </div>
   );
 }
 
