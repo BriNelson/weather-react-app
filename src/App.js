@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Card, Box } from '@mui/material';
+import { Button, Card, Box, CardMedia, TextField } from '@mui/material';
 import './App.css';
 
 function Weather({temperature, weather, city}) {
@@ -16,11 +16,20 @@ function Weather({temperature, weather, city}) {
   )
 }
 
-function SevenDayForecast({ sevenDayTemp, sevenDayWeather }) {
+function SevenDayForecast({ sevenDayTemp, sevenDayWeather, sevenDayIcon }) {
   return (
     <>
+      <Card sx={{ maxWidth: 70 }}>
+      <CardMedia
+        component="img"
+        height="70"
+        image={"http://openweathermap.org/img/wn/"+ sevenDayIcon +"@2x.png"}
+        alt="Paella dish"
+      />
       <p>{sevenDayTemp}</p>
-      <p>{sevenDayWeather}</p>
+        <p>{sevenDayWeather}</p>
+        
+        </Card>
     </>
   )
 }
@@ -31,13 +40,17 @@ function App() {
   const [localTemp, setlocalTemp] = useState([]);
   const [localWeather, setLocalWeather] = useState([]);
   const [dayList, setDayList] = useState([]);
+  const [chosenCity, setChosenCity] = useState('');
+
 
   
   async function getWeather() {
-    const response = await fetch('https://api.openweathermap.org/data/2.5/forecast/daily?q=London&units=imperial&cnt=7&appid=');
+
+
+    const response = await fetch('https://api.openweathermap.org/data/2.5/forecast/daily?q=London&units=imperial&cnt=7&appid=08e194dbf106b4a880235ddea75704dd');
     const data = await response.json()
 
-    console.log(data)
+    console.log(data.list)
        setlocalTemp(data.list[0].temp.day) 
     setLocalWeather(data.list[0].weather[0].main)
     setCityName(data.city.name)
@@ -48,17 +61,25 @@ function App() {
     
     
   
-  console.log(localTemp)
+ 
   return (
     <>
-      
+      <form>
+      <input
+        type="text"
+          value={chosenCity}
+          onChange={(e) => setChosenCity(e.target.value)}
+      ></input>
+      <button onClick={getWeather}>
+  Get Weather
+        </button>
+      </form>
+      {chosenCity}
       <Card sx={{ maxWidth: 275 }}>
         <Weather temperature={localTemp} weather={localWeather} city={cityName} />
         </Card>
         
-      <Button variant="contained" onClick={getWeather}>
-  Get Weather
-</Button>
+      {dayList.map(dayTest => (<SevenDayForecast sevenDayTemp={dayTest.temp.day} sevenDayWeather={dayTest.weather[0].main} sevenDayIcon={dayTest.weather[0].icon }/>))}
      
 </>
   );
