@@ -1,38 +1,12 @@
 import { useState } from 'react';
-import {Card, CardMedia, Button} from '@mui/material';
+import { Card, CardMedia, Button } from '@mui/material';
+import SevenDayForecast from './components/SevenDayForecast';
+import TodayWeather from './components/TodayWeather'
 import './App.css';
 
-function Weather({temperature, weather, city}) {
-  
-  return (
-    <>
-      
-      <h3>{city}</h3>
-      <p> {temperature}</p>
-      <p> {weather}</p>
-      
-  
-    </>
-  )
-}
 
-function SevenDayForecast({ sevenDayTemp, sevenDayWeather, sevenDayIcon }) {
-  return (
-    <>
-      <Card sx={{ maxWidth: 70 }}>
-      <CardMedia
-        component="img"
-        height="70"
-        image={"http://openweathermap.org/img/wn/"+ sevenDayIcon +"@2x.png"}
-        alt="Paella dish"
-      />
-      <p>{sevenDayTemp}</p>
-        <p>{sevenDayWeather}</p>
-        
-        </Card>
-    </>
-  )
-}
+
+
 
 
 function App() {
@@ -42,8 +16,9 @@ function App() {
   const [dayList, setDayList] = useState([]);
   const [chosenCity, setChosenCity] = useState('');
   const [chosenUnit, setChosenUnit] = useState('imperial');
+  const [date, setDate] = useState('');
   
-
+const [dayIcon, setDayIcon] = useState('03d');
 
   
   async function getWeather() {
@@ -57,7 +32,16 @@ function App() {
     setLocalWeather(data.list[0].weather[0].main)
     setCityName(data.city.name)
     setDayList(data.list)
+    setDayIcon(data.list[0].weather[0].icon)
+    
 
+    let dateObj = new Date(data.list[0].dt * 1000)
+    
+    setDate(dateObj.toString().split(/\s+/))
+    console.log(date[1])
+    
+    // var stringArray = dateObj.split(/\s+/);
+    // console.log(stringArray)
 
     }
     
@@ -85,13 +69,20 @@ function App() {
         </Button>
         </div>
       <div className="mainCard">
-      <Card sx={{ width: 275 }}>
-        <Weather temperature={localTemp} weather={localWeather} city={cityName} />
+      <Card sx={{ width: 200, p:1, display: 'flex' }}>
+         <div> <TodayWeather temperature={localTemp} weather={localWeather} city={cityName} /></div>
+
+         <div><CardMedia
+        component="img"
+        height="150"
+            image={"http://openweathermap.org/img/wn/" + dayIcon +"@2x.png"}
+        alt="weather icon"
+      /></div> 
         </Card>
         </div>
       <div className="sevenDat">
     
-      {dayList.map(dayTest => (<SevenDayForecast className="daySpacing" sevenDayTemp={dayTest.temp.day} sevenDayWeather={dayTest.weather[0].main} sevenDayIcon={dayTest.weather[0].icon }/>))}
+      {dayList.map(dayTest => (<SevenDayForecast className="daySpacing" sevenDayTemp={dayTest.temp.day} sevenDayWeather={dayTest.weather[0].main} sevenDayIcon={dayTest.weather[0].icon } />))}
       </div>
       </div>
   );
