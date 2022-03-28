@@ -5,10 +5,6 @@ import TodayWeather from './components/TodayWeather'
 import './App.css';
 
 
-
-
-
-
 function App() {
   const [cityName, setCityName] = useState([]);
   const [localTemp, setlocalTemp] = useState([]);
