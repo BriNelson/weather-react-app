@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TodayWeather({temperature, weather, city}) {
+function TodayWeather({temperature, weather, city, date}) {
   
     return (
       <>
@@ -8,6 +8,7 @@ function TodayWeather({temperature, weather, city}) {
         <h3>{city}</h3>
         <p> {temperature}</p>
         <p> {weather}</p>
+        {/* <p> {date[0] + "," + date[1] + "," + date[3] + ""} </p> */}
         
     
       </>

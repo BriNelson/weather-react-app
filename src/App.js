@@ -34,7 +34,7 @@ const [dayIcon, setDayIcon] = useState('03d');
     let dateObj = new Date(data.list[0].dt * 1000)
     
     setDate(dateObj.toString().split(/\s+/))
-    console.log(date[1])
+    console.log(date)
     
     // var stringArray = dateObj.split(/\s+/);
     // console.log(stringArray)
@@ -66,7 +66,7 @@ const [dayIcon, setDayIcon] = useState('03d');
         </div>
       <div className="mainCard">
       <Card sx={{ width: 200, p:1, display: 'flex' }}>
-         <div> <TodayWeather temperature={localTemp} weather={localWeather} city={cityName} /></div>
+          <div> <TodayWeather temperature={localTemp} weather={localWeather} city={cityName} date={date}/></div>
 
          <div><CardMedia
         component="img"
@@ -78,7 +78,7 @@ const [dayIcon, setDayIcon] = useState('03d');
         </div>
       <div className="sevenDat">
     
-      {dayList.map(dayTest => (<SevenDayForecast className="daySpacing" sevenDayTemp={dayTest.temp.day} sevenDayWeather={dayTest.weather[0].main} sevenDayIcon={dayTest.weather[0].icon } />))}
+      {dayList.map(dayTest => (<SevenDayForecast className="daySpacing" sevenDayTemp={dayTest.temp.day} sevenDayWeather={dayTest.weather[0].main} sevenDayIcon={dayTest.weather[0].icon } date={dayTest.dt} />))}
       </div>
       </div>
   );
